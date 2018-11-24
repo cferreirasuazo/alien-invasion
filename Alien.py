@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-
+#ALIEN CLASS
 class Alien(Sprite):
 
     def __init__(self,settings,screen):
