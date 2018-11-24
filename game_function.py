@@ -80,6 +80,9 @@ def create_fleet(settings,screen,ship,aliens):
             create_alien(settings,screen,aliens,alien_number,row_number)
 
 
+def update_aliens(aliens):
+    aliens.update()
+
 
 def update_screen(settings,screen,ship,aliens,bullets,stars):
     screen.fill(settings.bg_color)
