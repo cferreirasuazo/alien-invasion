@@ -21,7 +21,7 @@ def run_game():
     
     stars = Group()
 
-    #gf.create_fleet(s,screen,ship,aliens)
+    gf.create_fleet(s,screen,ship,aliens)
 
 #     for o in range(1,100):
 
