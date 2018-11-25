@@ -1,4 +1,4 @@
-#main method
+#main method    
 
 import sys
 import pygame
@@ -25,19 +25,13 @@ def run_game():
 
     gf.create_fleet(s,screen,ship,aliens)
 
-#     for o in range(1,100):
-
-#         coor_x = random.randint(1,1000)
-#         coor_y = random.randint(1,600)
-#         star = Star(screen, (coor_x,coor_y))
-#         stars.add(star)
 
     while True:
 
         gf.check_events(s,screen,ship,bullets)
         ship.update()
         gf.update_bullets(bullets)
-        gf.update_aliens(aliens)
+        gf.update_aliens(s,aliens)
         gf.update_screen(s,screen,ship,aliens,bullets,stars)
         
 run_game()

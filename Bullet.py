@@ -7,6 +7,7 @@ class Bullet(Sprite):
         super(Bullet,self).__init__()
         self.screen = screen
         self.rect = pygame.Rect(0,0,settings.bullet_width,settings.bullet_height)
+        #self.rect = pygame.draw.circle(0,0,settings.bullet_width,settings.bullet_height)
         self.rect.centerx = ship.rect.centerx
         self.rect.top = ship.rect.top
 

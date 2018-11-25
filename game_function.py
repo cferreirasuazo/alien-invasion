@@ -80,9 +80,20 @@ def create_fleet(settings,screen,ship,aliens):
             create_alien(settings,screen,aliens,alien_number,row_number)
 
 
-def update_aliens(aliens):
+def update_aliens(settings,aliens):
+    check_fleet_edges(settings,aliens)
     aliens.update()
 
+def change_fleet_direction(settings,aliens):
+    for alien in aliens.sprites():
+        alien.rect.y +=settings.fleet_drop_speed
+    settings.fleet_direction *= -1
+
+def check_fleet_edges(settings,aliens):
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(settings,aliens)
+            break
 
 def update_screen(settings,screen,ship,aliens,bullets,stars):
     screen.fill(settings.bg_color)
