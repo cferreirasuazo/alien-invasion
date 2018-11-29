@@ -4,7 +4,7 @@ import sys
 import pygame
 from Bullet import Bullet
 from Alien import Alien
-
+from Drop import Drop
 from Star import Star
 
 #KEYDOWN Event 
@@ -33,6 +33,20 @@ def check_events(settings,screen,ship,bullets):
                 check_keydown_events(event,settings,screen,ship,bullets)
             elif event.type == pygame.KEYUP:
                 check_keyup_events(event,ship)
+
+
+def update_drops(drops):
+    drops.update()
+    for drop in drops.copy():
+        if drop.rect.bottom >= 600:
+            drops.remove(drop)
+
+def fall_drop(screen,ran,drops):
+
+    drop = Drop(screen,ran)
+    drops.add(drop)
+
+
 
 #Updates positon of the bullets
 def update_bullets(bullets):
@@ -95,12 +109,15 @@ def check_fleet_edges(settings,aliens):
             change_fleet_direction(settings,aliens)
             break
 
-def update_screen(settings,screen,ship,aliens,bullets,stars):
+def update_screen(settings,screen,ship,aliens,bullets,stars,drops):
     screen.fill(settings.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
 
+    for drop in drops.sprites():
+        drop.blitme()
+
     ship.blitme()
     aliens.draw(screen)
-    stars.draw(screen)
+    # stars.draw(screen)
     pygame.display.flip()
