@@ -8,8 +8,8 @@ from ship import Ship
 import game_function as gf
 
 
-import random 
-from Star import Star
+#import random 
+
 
 
 def run_game():
@@ -21,7 +21,6 @@ def run_game():
     aliens = Group()
     bullets = Group()
     
-    stars = Group()
 
     gf.create_fleet(s,screen,ship,aliens)
 
@@ -30,8 +29,8 @@ def run_game():
 
         gf.check_events(s,screen,ship,bullets)
         ship.update()
-        gf.update_bullets(bullets)
+        gf.update_bullets(s,screen,ship,aliens,bullets)
         gf.update_aliens(s,aliens)
-        gf.update_screen(s,screen,ship,aliens,bullets,stars)
+        gf.update_screen(s,screen,ship,aliens,bullets)
         
 run_game()

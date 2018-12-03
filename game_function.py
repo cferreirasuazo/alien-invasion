@@ -24,7 +24,6 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-
 def check_events(settings,screen,ship,bullets):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -35,11 +34,21 @@ def check_events(settings,screen,ship,bullets):
                 check_keyup_events(event,ship)
 
 #Updates positon of the bullets
-def update_bullets(bullets):
+def update_bullets(settings,screen,ship,aliens, bullets):
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <=0:
             bullets.remove(bullet)
+    
+
+    check_bullet_alien_collition(settings,screen,ship,aliens, bullets)
+
+def check_bullet_alien_collition(settings,screen,ship,aliens, bullets):
+    collisions = pygame.sprite.groupcollide(bullets,aliens,True,True)
+
+    if len(aliens) == 0:
+        bullets.empty()
+        create_fleet(settings,screen,ship,aliens)
 
 #ship fires a bullet 
 def fire_bullets(settings,screen,ship,bullets):
@@ -59,7 +68,6 @@ def get_number_rows(settings, ship_heigth, alien_height):
     number_rows = int(avariable_space_y / (2* alien_height))
     return number_rows 
 
-
 #creates and alien 
 def create_alien(settings, screen,aliens,alien_number,row_number):
     alien = Alien(settings,screen)
@@ -68,7 +76,6 @@ def create_alien(settings, screen,aliens,alien_number,row_number):
     alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
     alien.rect.x = alien.x
     aliens.add(alien)
-
 
 def create_fleet(settings,screen,ship,aliens):
     alien = Alien(settings,screen)
@@ -95,12 +102,11 @@ def check_fleet_edges(settings,aliens):
             change_fleet_direction(settings,aliens)
             break
 
-def update_screen(settings,screen,ship,aliens,bullets,stars):
+def update_screen(settings,screen,ship,aliens,bullets):
     screen.fill(settings.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
 
     ship.blitme()
     aliens.draw(screen)
-    stars.draw(screen)
     pygame.display.flip()
