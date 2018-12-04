@@ -1,5 +1,5 @@
 import pygame
-
+#CLASS FOR SHIP IN GAME
 class Ship():
     def __init__(self,settings,screen):
         self.screen = screen
