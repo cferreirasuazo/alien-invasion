@@ -4,8 +4,9 @@ import sys
 import pygame
 from Bullet import Bullet
 from Alien import Alien
+from time import sleep
 
-from Star import Star
+
 
 #KEYDOWN Event 
 def check_keydown_events(event,settings,screen,ship,bullets):
@@ -87,9 +88,33 @@ def create_fleet(settings,screen,ship,aliens):
             create_alien(settings,screen,aliens,alien_number,row_number)
 
 
-def update_aliens(settings,aliens):
+def shit_hit(settings,stats,screen,ship,aliens,bullets):
+    if stats.ship_left > 0:
+        stats.ship_left -= 1
+        aliens.empty()
+        bullets.empty()
+        create_fleet(settings,screen,ship,aliens)
+        ship.center_ship()
+        sleep(0.5)
+    else:
+        stats.game_active = False
+
+def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            shit_hit(settings,stats,screen,ship,aliens,bullets)
+            break
+
+def update_aliens(settings,stats,screen,ship,aliens,bullets):
+    check_aliens_bottom(settings, stats, screen, ship, aliens, bullets)
     check_fleet_edges(settings,aliens)
     aliens.update()
+
+
+    if pygame.sprite.spritecollideany(ship,aliens):
+        shit_hit(settings,stats,screen,ship,aliens,bullets)
+
 
 def change_fleet_direction(settings,aliens):
     for alien in aliens.sprites():
