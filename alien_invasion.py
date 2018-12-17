@@ -8,7 +8,6 @@ from ship import Ship
 import game_function as gf
 from game_stats import GameStats
 
-
 #import random 
 
 
