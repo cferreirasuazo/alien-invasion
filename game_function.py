@@ -127,11 +127,14 @@ def check_fleet_edges(settings,aliens):
             change_fleet_direction(settings,aliens)
             break
 
-def update_screen(settings,screen,ship,aliens,bullets):
+def update_screen(settings,screen,ship,stats,aliens,bullets,play_button):
     screen.fill(settings.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
-
     ship.blitme()
     aliens.draw(screen)
+
+    if not stats.game_active:
+        play_button.draw_button()
+
     pygame.display.flip()

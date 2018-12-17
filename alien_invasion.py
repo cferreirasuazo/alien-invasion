@@ -7,7 +7,7 @@ from settings import Settings
 from ship import Ship
 import game_function as gf
 from game_stats import GameStats
-
+from button import Button
 #import random 
 
 
@@ -22,7 +22,7 @@ def run_game():
     bullets = Group()
     gf.create_fleet(s,screen,ship,aliens)
     stats = GameStats(s)
-
+    play_button = Button(s,screen,"Play")
 
     while True:
 
@@ -31,6 +31,6 @@ def run_game():
                 ship.update()
                 gf.update_bullets(s,screen,ship,aliens,bullets)
                 gf.update_aliens(s,stats,screen,ship,aliens,bullets)
-        gf.update_screen(s,screen,ship,aliens,bullets)
+        gf.update_screen(s,screen,ship,stats,aliens,bullets,play_button)
         
 run_game()
