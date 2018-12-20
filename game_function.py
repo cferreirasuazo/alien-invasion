@@ -51,6 +51,7 @@ def start_game(settings,screen,stats,play_button,ship,aliens,bullets):
 
 def check_play_button(settings,screen,stats,play_button,ship,aliens,bullets,mouse_x,mouse_y):
     button_clicked = play_button.rect.collidepoint(mouse_x,mouse_y)
+    settings.initialize_dynamic_settings()
     
     if  button_clicked and not stats.game_active:
         start_game(settings,screen,stats,play_button,ship,aliens,bullets)
@@ -71,6 +72,7 @@ def check_bullet_alien_collition(settings,screen,ship,aliens, bullets):
 
     if len(aliens) == 0:
         bullets.empty()
+        settings.increase_speed()
         create_fleet(settings,screen,ship,aliens)
 
 #ship fires a bullet 
