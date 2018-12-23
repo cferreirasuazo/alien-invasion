@@ -54,8 +54,8 @@ def check_play_button(settings,screen,stats,play_button,ship,aliens,bullets,mous
     settings.initialize_dynamic_settings()
     
     if  button_clicked and not stats.game_active:
+        settings.initialize_dynamic_settings()
         start_game(settings,screen,stats,play_button,ship,aliens,bullets)
-
 
 #Updates positon of the bullets
 def update_bullets(settings,screen,ship,aliens, bullets):
