@@ -25,7 +25,7 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-def check_events(settings,screen,stats,play_button,ship,aliens,bullets):
+def check_events(settings,screen,stats,sb,play_button,ship,aliens,bullets):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -35,7 +35,7 @@ def check_events(settings,screen,stats,play_button,ship,aliens,bullets):
                 check_keyup_events(event,ship)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                check_play_button(settings,screen,stats,play_button,ship,aliens,bullets,mouse_x,mouse_y)
+                check_play_button(settings,screen,stats,sb,play_button,ship,aliens,bullets,mouse_x,mouse_y)
 
 
 def check_high_score(stats,sb):
@@ -44,10 +44,14 @@ def check_high_score(stats,sb):
         sb.prep_high_score()
 
 
-def start_game(settings,screen,stats,play_button,ship,aliens,bullets):
+def start_game(settings,screen,stats,sb,play_button,ship,aliens,bullets):
         pygame.mouse.set_visible(False)
         stats.reset_stats()
         stats.game_active = True
+
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
 
         aliens.empty()
         bullets.empty()
@@ -55,13 +59,13 @@ def start_game(settings,screen,stats,play_button,ship,aliens,bullets):
         create_fleet(settings,screen,ship,aliens)
         ship.center_ship()     
 
-def check_play_button(settings,screen,stats,play_button,ship,aliens,bullets,mouse_x,mouse_y):
+def check_play_button(settings,screen,stats,sb,play_button,ship,aliens,bullets,mouse_x,mouse_y):
     button_clicked = play_button.rect.collidepoint(mouse_x,mouse_y)
     settings.initialize_dynamic_settings()
     
     if  button_clicked and not stats.game_active:
         settings.initialize_dynamic_settings()
-        start_game(settings,screen,stats,play_button,ship,aliens,bullets)
+        start_game(settings,screen,stats,sb,play_button,ship,aliens,bullets)
 
 #Updates positon of the bullets
 def update_bullets(settings,screen,stats,sb,ship,aliens, bullets):
@@ -84,6 +88,10 @@ def check_bullet_alien_collition(settings,screen,stats,sb,ship,aliens, bullets):
     if len(aliens) == 0:
         bullets.empty()
         settings.increase_speed()
+
+        stats.level += 1
+        sb.prep_level()
+
         create_fleet(settings,screen,ship,aliens)
 
 
