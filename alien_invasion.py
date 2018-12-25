@@ -1,4 +1,4 @@
-#main method    
+""""Main Module""""
 
 import sys
 import pygame

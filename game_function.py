@@ -1,3 +1,5 @@
+"""Module for game functions"""
+
 
 #events
 import sys
