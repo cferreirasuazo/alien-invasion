@@ -9,10 +9,13 @@ import game_function as gf
 from game_stats import GameStats
 from button import Button
 from scoreboard import ScoreBoard
+import os
 #import random 
 
 
+
 def run_game():
+
     pygame.init()
     s = Settings()
     screen = pygame.display.set_mode((s.screen_width, s.screen_height))

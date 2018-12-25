@@ -2,8 +2,10 @@ class Settings():
 
     def __init__(self):
         """Class for settings """
+        self.hs_directory = "high_score"
+        self.hs_file = "high_score.json" 
+        self.fullpath = self.hs_directory + "/" + self.hs_file
 
-        self.hs_file = "high_score.json"
 
         self.screen_width = 1000
         self.screen_height = 600 
@@ -21,8 +23,8 @@ class Settings():
         self.bullets_allow = 3
         
         # #alien settings
-        self.alien_speed_factor = 0.4
-        self.fleet_drop_speed = 15
+        self.alien_speed_factor = 0.5
+        self.fleet_drop_speed = 10
         self.fleet_direction = 1
 
         #game speed up

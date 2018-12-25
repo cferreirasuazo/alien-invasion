@@ -7,7 +7,7 @@ from Bullet import Bullet
 from Alien import Alien
 from time import sleep
 import json
-
+import os
 
 #KEYDOWN Event 
 def check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bullets):
@@ -42,9 +42,9 @@ def check_events(settings,screen,stats,sb,play_button,ship,aliens,bullets):
 
 
 def save_high_score(settings,stats):
-    filename = settings.hs_file
+
     try:
-        with open(filename,"w") as file:
+        with open(settings.fullpath,"w") as file:
             json.dump(stats.high_score,file)
     except :
         print("ERROR")
@@ -52,9 +52,9 @@ def save_high_score(settings,stats):
         print("SAVED")
 
 def load_high_score(settings):
-    filename = settings.hs_file
+
     try:
-        with open(filename) as f_obj:
+        with open(settings.fullpath) as f_obj:
             high_score = json.load(f_obj)
     except FileNotFoundError:
             print("FILE DOESNT EXIT")
