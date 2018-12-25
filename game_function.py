@@ -48,18 +48,23 @@ def save_high_score(settings,stats):
             json.dump(stats.high_score,file)
     except :
         print("ERROR")
-    else:
-        print("SAVED")
+ 
 
-def load_high_score(settings):
-
-    try:
-        with open(settings.fullpath) as f_obj:
-            high_score = json.load(f_obj)
-    except FileNotFoundError:
-            print("FILE DOESNT EXIT")
+def load_high_score(settings,stats):
+    print("LOAD HIGH SCORE")
+    if os.path.isdir(settings.hs_directory):
+        try:
+            with open(settings.fullpath) as f_obj:
+                high_score = json.load(f_obj)
+        except FileNotFoundError:
+                print("FILE DOESNT EXIT")
+        else:
+            return high_score
     else:
-        return high_score
+
+        os.mkdir("high_score")
+        save_high_score(settings,stats)
+        return 0
 
 def check_high_score(stats,sb):
     if stats.score > stats.high_score:
