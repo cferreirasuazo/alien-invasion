@@ -1,12 +1,13 @@
 """Module for game functions"""
 
-
 #events
 import sys
 import pygame
 from Bullet import Bullet
 from Alien import Alien
 from time import sleep
+import json
+
 
 #KEYDOWN Event 
 def check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bullets):
@@ -40,11 +41,30 @@ def check_events(settings,screen,stats,sb,play_button,ship,aliens,bullets):
                 check_play_button(settings,screen,stats,sb,play_button,ship,aliens,bullets,mouse_x,mouse_y)
 
 
+def save_high_score(settings,stats):
+    filename = settings.hs_file
+    try:
+        with open(filename,"w") as file:
+            json.dump(stats.high_score,file)
+    except :
+        print("ERROR")
+    else:
+        print("SAVED")
+
+def load_high_score(settings):
+    filename = settings.hs_file
+    try:
+        with open(filename) as f_obj:
+            high_score = json.load(f_obj)
+    except FileNotFoundError:
+            print("FILE DOESNT EXIT")
+    else:
+        return high_score
+
 def check_high_score(stats,sb):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
-
 
 def start_game(settings,screen,stats,sb,play_button,ship,aliens,bullets):
         pygame.mouse.set_visible(False)
@@ -97,8 +117,6 @@ def check_bullet_alien_collition(settings,screen,stats,sb,ship,aliens, bullets):
         create_fleet(settings,screen,ship,aliens)
 
 
-
-
 #ship fires a bullet 
 def fire_bullets(settings,screen,ship,bullets):
     if len(bullets) < settings.bullets_allow:
@@ -147,9 +165,9 @@ def ship_hit(settings,stats,sb,screen,ship,aliens,bullets):
         ship.center_ship()
         sleep(0.5)
     else:
-        
         stats.game_active = False
         pygame.mouse.set_visible(True)
+        save_high_score(settings,stats)
 
 def check_aliens_bottom(settings, stats,sb, screen, ship, aliens, bullets):
     screen_rect = screen.get_rect()

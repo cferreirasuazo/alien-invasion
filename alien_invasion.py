@@ -1,4 +1,4 @@
-""""Main Module""""
+"""Main Module"""
 
 import sys
 import pygame
@@ -10,7 +10,6 @@ from game_stats import GameStats
 from button import Button
 from scoreboard import ScoreBoard
 #import random 
-
 
 
 def run_game():
@@ -25,7 +24,8 @@ def run_game():
     stats = GameStats(s)
     play_button = Button(s,screen,"Play")
     sb = ScoreBoard(s,screen,stats)
-
+    
+    stats.high_score = gf.load_high_score(s)
     while True:
 
         gf.check_events(s,screen,stats,sb,play_button,ship,aliens,bullets)
