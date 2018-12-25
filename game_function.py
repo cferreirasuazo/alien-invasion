@@ -38,6 +38,12 @@ def check_events(settings,screen,stats,play_button,ship,aliens,bullets):
                 check_play_button(settings,screen,stats,play_button,ship,aliens,bullets,mouse_x,mouse_y)
 
 
+def check_high_score(stats,sb):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
+
+
 def start_game(settings,screen,stats,play_button,ship,aliens,bullets):
         pygame.mouse.set_visible(False)
         stats.reset_stats()
@@ -73,6 +79,7 @@ def check_bullet_alien_collition(settings,screen,stats,sb,ship,aliens, bullets):
         for aliens in collisions.values():
             stats.score += settings.alien_points * len(aliens)
             sb.prep_score()
+        check_high_score(stats,sb)
 
     if len(aliens) == 0:
         bullets.empty()
