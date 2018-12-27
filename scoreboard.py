@@ -13,7 +13,7 @@ class ScoreBoard():
         self.stats = stats 
 
         self.text_color = (30,30,30)
-        self.font = pygame.font.Font("assets/ARCADE_R.TTF",30)
+        self.font = pygame.font.Font("assets/ARCADE_R.TTF",25)
 
         self.prep_score()
         self.prep_high_score()

@@ -8,6 +8,9 @@ from Alien import Alien
 from time import sleep
 import json
 import os
+import pygame.mixer
+from soundplayer import SoundPlayer
+
 
 #KEYDOWN Event 
 def check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bullets):
@@ -17,6 +20,7 @@ def check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bul
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullets(settings,screen,ship,bullets)
+        shoot_sound(settings)
     elif event.key == pygame.K_q:
                 sys.exit()
     elif event.key == pygame.K_p:
@@ -41,6 +45,19 @@ def check_events(settings,screen,stats,sb,play_button,ship,aliens,bullets):
                 check_play_button(settings,screen,stats,sb,play_button,ship,aliens,bullets,mouse_x,mouse_y)
 
 
+def shoot_sound(settings):
+    shoot = SoundPlayer(settings.shoot)
+    shoot.play_sound()
+    # shoot = pygame.mixer.Sound("assets/laser.wav")
+    # pygame.mixer.Sound(shoot).play().set_volume(0.1)
+    
+def explotion_sound(settings):
+    explosion = SoundPlayer(settings.explosion)
+    explosion.play_sound()
+
+    # explosion = pygame.mixer.Sound("assets/explosion.wav")
+    # pygame.mixer.Sound(explosion).play().set_volume(0.5)
+
 def save_high_score(settings,stats):
 
     try:
@@ -51,7 +68,6 @@ def save_high_score(settings,stats):
  
 
 def load_high_score(settings,stats):
-    print("LOAD HIGH SCORE")
     if os.path.isdir(settings.hs_directory):
         try:
             with open(settings.fullpath) as f_obj:
@@ -61,8 +77,7 @@ def load_high_score(settings,stats):
         else:
             return high_score
     else:
-
-        os.mkdir("high_score")
+        os.mkdir(settings.hs_directory)
         save_high_score(settings,stats)
         return 0
 
@@ -108,8 +123,10 @@ def check_bullet_alien_collition(settings,screen,stats,sb,ship,aliens, bullets):
     collisions = pygame.sprite.groupcollide(bullets,aliens,True,True)
     if collisions:
         for aliens in collisions.values():
+            explotion_sound(settings)
             stats.score += settings.alien_points * len(aliens)
             sb.prep_score()
+
         check_high_score(stats,sb)
 
     if len(aliens) == 0:

@@ -2,9 +2,12 @@ class Settings():
 
     def __init__(self):
         """Class for settings """
+        #settings for hight score directory
         self.hs_directory = "high_score"
         self.hs_file = "high_score.json" 
         self.fullpath = self.hs_directory + "/" + self.hs_file
+
+
 
 
         self.screen_width = 1000
@@ -22,7 +25,7 @@ class Settings():
         self.bullet_color = (60,60,60)
         self.bullets_allow = 3
         
-        # #alien settings
+        #alien settings
         self.alien_speed_factor = 0.5
         self.fleet_drop_speed = 10
         self.fleet_direction = 1
@@ -31,6 +34,15 @@ class Settings():
         self.speedup_scale = 1.1 
         self.score_scale = 1.5
         self.initialize_dynamic_settings()
+
+        #Sounds
+        self.shoot = {"soundURL": "assets/laser.wav",
+                        "volume":0.2}
+        self.explosion = {"soundURL":"assets/explosion.wav",
+                        "volume":0.5}
+
+
+
     
     def initialize_dynamic_settings(self):
         self.ship_speed_factor = 1.5

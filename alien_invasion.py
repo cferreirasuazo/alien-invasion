@@ -27,8 +27,7 @@ def run_game():
     stats = GameStats(s)
     play_button = Button(s,screen,"Play")
     sb = ScoreBoard(s,screen,stats)
-    
-    stats.high_score = gf.load_high_score(s,stats)
+    stats.high_score = gf.load_high_score(s,stats)  
     while True:
 
         gf.check_events(s,screen,stats,sb,play_button,ship,aliens,bullets)
