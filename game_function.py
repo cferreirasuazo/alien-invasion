@@ -37,9 +37,11 @@ def check_events(settings,screen,stats,sb,play_button,ship,aliens,bullets):
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bullets)
+                if stats.game_active:
+                    check_keydown_events(event,settings,stats,play_button,screen,ship,aliens,bullets)
             elif event.type == pygame.KEYUP:
-                check_keyup_events(event,ship)
+                if stats.game_active:
+                    check_keyup_events(event,ship)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 check_play_button(settings,screen,stats,sb,play_button,ship,aliens,bullets,mouse_x,mouse_y)
@@ -121,9 +123,11 @@ def update_bullets(settings,screen,stats,sb,ship,aliens, bullets):
 
 def check_bullet_alien_collition(settings,screen,stats,sb,ship,aliens, bullets):
     collisions = pygame.sprite.groupcollide(bullets,aliens,True,True)
+    
     if collisions:
+        explotion_sound(settings)
         for aliens in collisions.values():
-            explotion_sound(settings)
+            
             stats.score += settings.alien_points * len(aliens)
             sb.prep_score()
 
