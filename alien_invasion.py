@@ -14,7 +14,7 @@ import os
 
 
 
-def run_game():
+def main():
 
     pygame.init()
     s = Settings()
@@ -37,4 +37,5 @@ def run_game():
                 gf.update_aliens(s,stats,sb,screen,ship,aliens,bullets)
         gf.update_screen(s,screen,ship,stats,sb,aliens,bullets,play_button)
         
-run_game()
+if __name__ == "__main__":
+	main()
